@@ -3,10 +3,15 @@
   <head>
     <meta charset="utf-8">
 
-    <title>A presentation</title>
+    <title>Web Workers, Encryption, Polymer, and the File API</title>
 
     <link rel="stylesheet" href="css/reveal.min.css">
     <link rel="stylesheet" href="css/theme/night.css" id="theme">
+    <style>
+      .reveal pre {
+        width: 95%;
+      }
+    </style>
 
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="css/zenburn.css">
@@ -24,62 +29,7 @@
           <h1>Connected! :)</h1>
         </section>
 
-        <section>
-          <h3>Title of presentation</h3>
-          <h4>Author</h4>
-        </section>
-
-        <section>
-          <h3>A list of things</h3>
-          <p>Isn't this list pretty great?</p>
-
-          <ul>
-            <li class="fragment fadein">One</li>
-            <li class="fragment fadein">Two</li>
-            <li class="fragment fadein">Three</li>
-            <li class="fragment fadein">Four</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Pretty Code</h2>
-          <pre><code data-trim contenteditable class="zoomable">
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
-    }
-  }
-}
-          </code></pre>
-          <p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-        </section>
-
-        <section>
-          <p>How about all of them at once?</p>
-          <ul>
-            <li class="fadein">One</li>
-            <li class="fadein">Two</li>
-            <li class="fadein">Three</li>
-            <li class="fadein">Four</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>last slide!</h2>
-        </section>
-
-        <section>
-          <h2>fin</h2>
-        </section>
-
+        <section data-markdown="slides.md" data-separator="^---" data-vertical="^-vert-"></section>
       </div>
     </div>
 
@@ -88,81 +38,6 @@ function linkify( selector ) {
     <script src="js/socket.io.min.js"></script>
     <script src="js/qrcode.js"></script>
 
-    <script>
-
-      var remoteServer = "http://securesha.re:8008"
-      // generate our random hash
-      var uid = "qazwsxedcrfvtgbyhnujmikolp1234567890".split('').sort(function(){return 0.5-Math.random()}).join('');
-
-      // we need this to generate the URL
-      var create_qrcode = function(text) {
-        var qr = qrcode(5, 'M');
-        qr.addData(text);
-        qr.make();
-
-        return qr.createImgTag(10);
-      };
-
-      // make qr code
-      document.getElementById('qr').innerHTML = create_qrcode(remoteServer + '/remote.html#'+uid);
-
-      // connected?
-      var connected = false;
-
-      // create presentation
-      Reveal.initialize({
-        controls: true,
-        keyboard: true,
-        progress: true,
-        history: true,
-        center: true,
-        // Optional libraries used to extend on reveal.js
-        dependencies: [
-          { src: 'js/classList.js', condition: function() { return !document.body.classList; } },
-          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-        ]
-      });
-
-      // connect to server
-      var socket = io.connect(remoteServer);
-
-      // identify with server
-      socket.on('identify', function(data) {
-        socket.emit('identity', {
-          type: 'viewer',
-          uid: uid
-        });
-      });
-
-      // connected and ready
-      socket.on('ready', function() {
-        if (!connected) {
-          Reveal.right();
-          connected = true;
-        }
-      });
-
-      // lose connection
-      socket.on('disconnected', function() {
-        // lost the remote
-        alert('lost connection.');
-      });
-
-      // register moves
-      socket.on('right', function() { Reveal.right(); });
-      socket.on('left', function() { Reveal.left(); });
-      socket.on('up', function() { Reveal.up(); });
-      socket.on('down', function() { Reveal.down(); });
-      socket.on('next', function() { Reveal.next(); });
-      socket.on('prev', function() { Reveal.prev(); });
-      socket.on('zoom', function() { zoom.to({element: document.querySelector(".present .zoomable")}); });
-      socket.on('overview', function() { Reveal.toggleOverview(); });
-
-
-    </script>
+    <script src="js/initSlides.js"></script>
   </body>
 </html>
