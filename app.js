@@ -56,6 +56,7 @@ io.sockets.on('connection', function(socket) {
                 remote.on('up', function() { viewer.emit('up'); });
                 remote.on('down', function() { viewer.emit('down'); });
                 remote.on('overview', function() { viewer.emit('overview'); });
+                remote.on('zoom', function() { viewer.emit('zoom'); });
             }
         }
     });
