@@ -67,8 +67,8 @@
                 // alert that we are ready
             });
 
-            document.addEventHandler('click', function() {
-                socket.emit("msg", {msg: this['data-emit']});
+            document.addEventListener('click', function(e) {
+                socket.emit("msg", {msg: e.target.getAttribute('data-emit')});
             });
         </script>
     </body>
