@@ -70,6 +70,9 @@ socket.on('ready', function() {
   if (!connected) {
     Reveal.right();
     connected = true;
+    setTimeout(function() {
+      document.querySelector(".socketConnection img").style.opacity = 1;
+    }, 4000);
   }
 });
 

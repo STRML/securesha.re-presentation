@@ -147,7 +147,7 @@
 ```
 
 * Styles on top, content in the middle, javascript on the bottom
-  ** Can use external styles (sass)
+  * Can use external styles (preprocessors will work)
 * Completely self-contained, portable, no risk of style bleeding
 * `<content>` tag allows transclusion
 
