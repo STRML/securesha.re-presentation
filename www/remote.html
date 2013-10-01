@@ -40,12 +40,15 @@
         <button class="quarter" onclick=right();>Right</button>
 
         <button class="full" onclick=overview();>Overview</button>
+        <button class="full" onclick=zoom();>Zoom</button>
 
         <script src="js/socket.io.min.js"></script>
 
         <script>
+            var remoteServer = "http://securesha.re:8008"
+
             var uid = window.location.hash.substring(1);
-            var socket = io.connect('http://dev.mindfuzz.net:8008');
+            var socket = io.connect(remoteServer);
 
             socket.on('connect', function () {
                 // we're connected to the server
@@ -66,6 +69,7 @@
             function next() { socket.emit('next'); }
             function prev() { socket.emit('prev'); }
             function overview() { socket.emit('overview'); }
+            function zoom() { socket.emit('zoom'); }
 
         </script>
     </body>
