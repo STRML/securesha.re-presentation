@@ -86,6 +86,7 @@ socket.on('msg', function(data){
   if (proxyMethods.indexOf(msg) !== -1){
     Reveal[msg]();
   } else if (msg === 'zoom') {
+    resetPan();
     var el = document.querySelector(".present code");
     zoom.to({element: el, pan: false});
   } else if (msg.indexOf('zoom') === 0 && msg.length > 4){
@@ -96,30 +97,41 @@ socket.on('msg', function(data){
   }
 });
 
+
+var currentPan = {top: 0, left: 0};
+
 function panScreen(direction) {
-  var scrollOffset = getScrollOffset();
-  var scrollAmount = 14; // magicnum
+  var scrollAmount = 30; // magicnum
   if (direction === "up") {
-    window.scroll( scrollOffset.x, scrollOffset.y - scrollAmount );
+    currentPan.top += scrollAmount;
   }
   // Down
   else if( direction === "down") {
-    window.scroll( scrollOffset.x, scrollOffset.y + scrollAmount );
+    currentPan.top -= scrollAmount;
   }
 
   // Left
   if(direction === "left") {
-    window.scroll( scrollOffset.x - scrollAmount, scrollOffset.y );
+    currentPan.left += scrollAmount;
   }
   // Right
   else if(direction === "right") {
-    window.scroll( scrollOffset.x + scrollAmount, scrollOffset.y );
+    currentPan.left -= scrollAmount;
   }
+  doPan();
 }
 
-function getScrollOffset() {
-  return {
-    x: window.scrollX !== undefined ? window.scrollX : window.pageXOffset,
-    y: window.scrollY !== undefined ? window.scrollY : window.pageXYffset
-  };
+function resetPan() {
+  currentPan = {top: 0, left: 0};
+  doPan();
+}
+
+function doPan() {
+  var reveal = document.querySelector('.reveal');
+  var transform = "translate(" + currentPan.left + "px, " + currentPan.top + "px)";
+  reveal.style.transform = transform;
+  reveal.style.OTransform = transform;
+  reveal.style.msTransform = transform;
+  reveal.style.MozTransform = transform;
+  reveal.style.WebkitTransform = transform;
 }
