@@ -1,4 +1,4 @@
-/* global qrcode, Reveal, io, zoom*/
+/* global qrcode, Reveal, io, zoom, hljs*/
 var remoteServer = "http://securesha.re:8008";
 // generate our random hash
 var uid = "qazwsxedcrfvtgbyhnujmikolp1234567890".split('').sort(function(){return 0.5-Math.random();}).join('');
@@ -32,6 +32,7 @@ Reveal.initialize({
     { src: 'js/classList.js', condition: function() { return !document.body.classList; } },
     { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
     { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
     { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
     { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
   ]
