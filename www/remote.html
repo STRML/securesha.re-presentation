@@ -31,16 +31,21 @@
     </head>
 
     <body>
-        <button class="full" onclick=next();>Next</button>
-        <button class="full" onclick=prev();>Previous</button>
+        <button class="full" data-emit="next">Next</button>
+        <button class="full" data-emit="prev">Previous</button>
 
-        <button class="quarter" onclick=left();>Left</button>
-        <button class="quarter" onclick=down();>Down</button>
-        <button class="quarter" onclick=up();>Up</button>
-        <button class="quarter" onclick=right();>Right</button>
+        <button class="quarter" data-emit="left">Left</button>
+        <button class="quarter" data-emit="down">Down</button>
+        <button class="quarter" data-emit="up">Up</button>
+        <button class="quarter" data-emit="right">Right</button>
 
-        <button class="full" onclick=overview();>Overview</button>
-        <button class="full" onclick=zoom();>Zoom</button>
+        <button class="full" data-emit="overview">Overview</button>
+        <button class="full" data-emit="zoom">Zoom</button>
+        <button class="quarter" data-emit="zoomleft">Left</button>
+        <button class="quarter" data-emit="zoomdown">Down</button>
+        <button class="quarter" data-emit="zoomup">Up</button>
+        <button class="quarter" data-emit="zoomright">Right</button>
+
 
         <script src="js/socket.io.min.js"></script>
 
@@ -62,15 +67,9 @@
                 // alert that we are ready
             });
 
-            function right() { socket.emit('right'); }
-            function left() { socket.emit('left'); }
-            function up() { socket.emit('up'); }
-            function down() { socket.emit('down'); }
-            function next() { socket.emit('next'); }
-            function prev() { socket.emit('prev'); }
-            function overview() { socket.emit('overview'); }
-            function zoom() { socket.emit('zoom'); }
-
+            document.addEventHandler('click', function() {
+                socket.emit("msg", {msg: this['data-emit']});
+            });
         </script>
     </body>
 </html>

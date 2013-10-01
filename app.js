@@ -48,15 +48,10 @@ io.sockets.on('connection', function(socket) {
                 viewer.emit('ready');
                 remote.emit('ready');
 
-                // now set up relays
-                remote.on('next', function() { viewer.emit('next'); });
-                remote.on('prev', function() { viewer.emit('prev'); });
-                remote.on('right', function() { viewer.emit('right'); });
-                remote.on('left', function() { viewer.emit('left'); });
-                remote.on('up', function() { viewer.emit('up'); });
-                remote.on('down', function() { viewer.emit('down'); });
-                remote.on('overview', function() { viewer.emit('overview'); });
-                remote.on('zoom', function() { viewer.emit('zoom'); });
+                remote.on('msg', function(data){
+                    viewer.emit('msg', data);
+                });
+
             }
         }
     });
