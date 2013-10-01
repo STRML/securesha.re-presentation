@@ -81,7 +81,6 @@
 <secureshare-app>
   <file-uploader>
     <file-chooser-button file="{{file}}">
-      <polymer-file id="file" blob="{{blob}}" result="{{file}}"></polymer-file>
     </file-chooser-button>
 
     <file-advanced-options closed="true" fileoptions="{{fileOptions}}">
