@@ -69,8 +69,9 @@ socket.on('up', function() { Reveal.up(); });
 socket.on('down', function() { Reveal.down(); });
 socket.on('next', function() { Reveal.next(); });
 socket.on('prev', function() { Reveal.prev(); });
+// Zoom into code
 socket.on('zoom', function() { 
-  var el = document.querySelector(".present .zoomable");
+  var el = document.querySelector(".present code");
   zoom.to({element: el, pan: false}); 
 });
 socket.on('overview', function() { Reveal.toggleOverview(); });
