@@ -97,11 +97,16 @@ socket.on('msg', function(data){
   }
 });
 
+//
+// Zoom Panning
+//
 
-var currentPan = {top: 0, left: 0};
+var currentPan;
+var reveal = document.querySelector('.reveal');
+resetPan();
 
 function panScreen(direction) {
-  var scrollAmount = 30; // magicnum
+  var scrollAmount = 50; // magicnum
   if (direction === "up") {
     currentPan.top += scrollAmount;
   }
@@ -122,12 +127,18 @@ function panScreen(direction) {
 }
 
 function resetPan() {
+  var transition = "all 0.5s ease";
+  reveal.style.transition = transition;
+  reveal.style.OTransition = transition;
+  reveal.style.msTransition = transition;
+  reveal.style.MozTransition = transition;
+  reveal.style.WebkitTransition = transition;
+
   currentPan = {top: 0, left: 0};
   doPan();
 }
 
 function doPan() {
-  var reveal = document.querySelector('.reveal');
   var transform = "translate(" + currentPan.left + "px, " + currentPan.top + "px)";
   reveal.style.transform = transform;
   reveal.style.OTransform = transform;
