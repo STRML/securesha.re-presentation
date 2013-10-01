@@ -38,6 +38,22 @@ Reveal.initialize({
   ]
 });
 
+// Wait for global `zoom` to be present, then fix webkit jank
+var zoomInterval = setInterval(function() {
+  if (window.zoom) {
+    clearInterval(zoomInterval);
+    fixZoomJank();
+  }
+}, 50);
+
+function fixZoomJank(){
+  Reveal.toggleOverview();
+  zoom.to({element: document.querySelector('.present')});
+  zoom.out();
+  Reveal.toggleOverview();
+}
+
+
 // connect to server
 var socket = io.connect(remoteServer);
 
