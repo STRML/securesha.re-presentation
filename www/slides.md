@@ -173,8 +173,6 @@
 
 ---
 
----
-
 ### Custom elements provide the best possible API
 
 * Imagine the web as a collection of rich component parts
